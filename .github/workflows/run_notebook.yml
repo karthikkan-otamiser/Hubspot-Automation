@@ -30,7 +30,7 @@ jobs:
           API_KEY: ${{ secrets.API_KEY }}
           MARKET_SIZE: ${{ secrets.MARKET_SIZE }}
         run: |
-          papermill "HubspotxRank Updated.ipynb" output.ipynb --log-output
+          papermill "HubspotxRank_Updated.ipynb" output.ipynb --log-output
 
       - name: Upload output notebook
         uses: actions/upload-artifact@v4
