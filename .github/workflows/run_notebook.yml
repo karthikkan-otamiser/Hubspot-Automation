@@ -1,10 +1,10 @@
-name: Run Notebook on Schedule
+name: Run HubSpot Ranking Notebook
 
 on:
   schedule:
-    - cron: '0 8 * * *'   # 8:00 AM UTC (9 AM Germany winter / 10 AM summer)
-    - cron: '0 20 * * *'  # 8:00 PM UTC (9 PM Germany winter / 10 PM summer)
-  workflow_dispatch:      # Also allows manual triggering
+    - cron: '0 8 * * *'
+    - cron: '0 20 * * *'
+  workflow_dispatch:
 
 jobs:
   run-notebook:
@@ -22,12 +22,15 @@ jobs:
       - name: Install dependencies
         run: |
           pip install papermill jupyter nbconvert
-          pip install -r requirements.txt  # your notebook's dependencies
+          pip install requests pandas gspread
 
       - name: Run notebook
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          API_KEY: ${{ secrets.API_KEY }}
+          MARKET_SIZE: ${{ secrets.MARKET_SIZE }}
         run: |
-          papermill your_notebook.ipynb output.ipynb \
-            --log-output
+          papermill "HubspotxRank Updated.ipynb" output.ipynb --log-output
 
       - name: Upload output notebook
         uses: actions/upload-artifact@v4
