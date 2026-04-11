@@ -2,8 +2,9 @@ name: Run Notebook on Schedule
 
 on:
   schedule:
-    - cron: '0 9 * * *'   # Every day at 9:00 AM UTC
-  workflow_dispatch:        # Also allows manual triggering
+    - cron: '0 8 * * *'   # 8:00 AM UTC (9 AM Germany winter / 10 AM summer)
+    - cron: '0 20 * * *'  # 8:00 PM UTC (9 PM Germany winter / 10 PM summer)
+  workflow_dispatch:      # Also allows manual triggering
 
 jobs:
   run-notebook:
